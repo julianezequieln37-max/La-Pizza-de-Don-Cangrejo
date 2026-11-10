@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Pizza de Don Cangrejo - Pedidos Online</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#e11d48',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        amberGold: '#f59e0b',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fafaf9;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-stone-800 antialiased bg-stone-50 min-h-screen flex flex-col pb-24 md:pb-12">
+
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo & Business info -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="w-12 h-12 rounded-2xl overflow-hidden shadow-md shadow-red-500/20 border border-amber-500/30 transform hover:scale-105 transition-transform bg-stone-900 flex items-center justify-center">
+                        <img src="Img/logo.jpeg" alt="Logo Don Cangrejo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h1 class="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight leading-none">La Pizza de Don Cangrejo</h1>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                <span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Abierto
+                            </span>
+                        </div>
+                        <p class="text-xs text-stone-500 mt-1 flex items-center">
+                            <i class="fa-regular fa-clock mr-1 text-red-500"></i> Horario • 20:00 hs a 00:30 hs
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Header Actions -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    
+                    <!-- Instagram Direct Button -->
+                    <a href="https://www.instagram.com/pizzeria_don_cangrejo_?psln=MTdkMG5tN3lnOW13NQ==" target="_blank" rel="noopener noreferrer" 
+                       class="flex items-center space-x-1.5 text-xs font-bold text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:opacity-95 py-2.5 px-3 rounded-xl shadow-md transition transform active:scale-95">
+                        <i class="fa-brands fa-instagram text-base"></i>
+                        <span class="hidden sm:inline">Instagram</span>
+                    </a>
+
+                    <!-- WhatsApp Direct Contact Button -->
+                    <a href="https://wa.me/5493625453758" target="_blank" rel="noopener noreferrer"
+                       class="hidden sm:flex items-center space-x-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 py-2.5 px-3 rounded-xl shadow-md transition transform active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        <span>WhatsApp</span>
+                    </a>
+
+                    <!-- Cart Trigger Button -->
+                    <button onclick="toggleCartDrawer()" class="relative bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg shadow-red-600/30 flex items-center space-x-2 transition transform active:scale-95">
+                        <i class="fa-solid fa-basket-shopping text-lg"></i>
+                        <span class="hidden sm:inline">Mi Pedido</span>
+                        <span id="cartBadge" class="bg-amber-400 text-stone-900 font-extrabold text-xs px-2 py-0.5 rounded-full shadow-inner">0</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO / PROMO BANNER CON LOGO OFICIAL ESTÉTICO -->
+    <section class="relative bg-stone-900 text-white overflow-hidden border-b border-stone-800">
+        <div class="absolute inset-0 z-0 opacity-25 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop');"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-900/95 to-stone-950/80 z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                
+                <!-- Text Info Left -->
+                <div class="md:col-span-8 space-y-4">
+                    <span class="inline-flex items-center bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        <i class="fa-solid fa-wheat-awn mr-1.5"></i> 100% Masa Madre & Productos Frescos
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        La Pizza de Don Cangrejo
+                    </h2>
+                    <p class="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                        Nuestras masas son elaboradas artesanalmente con masa madre de alta fermentación y los mejores ingredientes frescos del mercado.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-3 text-xs font-medium text-stone-300 pt-2">
+                        <div class="flex items-center bg-stone-800/90 px-3.5 py-2 rounded-xl border border-stone-700 shadow-sm">
+                            <i class="fa-regular fa-clock text-amber-400 mr-2 text-sm"></i> Atendemos de 20:00 a 00:30 hs
+                        </div>
+                        <div class="flex items-center bg-stone-800/90 px-3.5 py-2 rounded-xl border border-stone-700 shadow-sm">
+                            <i class="fa-solid fa-motorcycle text-emerald-400 mr-2 text-sm"></i> Delivery & Retiro
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo Image Strategic Placement Right -->
+                <div class="md:col-span-4 flex justify-center md:justify-end">
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-red-600 rounded-3xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+                        <img src="Img/logo.jpeg" alt="Cartel La Pizza de Don Cangrejo" 
+                             class="relative w-56 h-56 sm:w-64 sm:h-64 object-cover rounded-3xl border-2 border-amber-500/40 shadow-2xl transform group-hover:scale-102 transition duration-300"
+                             onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=600&auto=format&fit=crop'">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+        
+        <!-- SEARCH & CATEGORIES NAVBAR -->
+        <div class="sticky top-20 z-20 bg-stone-50/95 backdrop-blur-md pt-2 pb-4 mb-6 border-b border-stone-200">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                
+                <!-- Category Tabs -->
+                <div class="flex space-x-2 overflow-x-auto hide-scrollbar pb-1 md:pb-0" id="categoryContainer">
+                    <!-- Dynamic categories rendered via JS -->
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative min-w-[240px]">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre o ingrediente..."
+                        oninput="filterProducts()"
+                        class="w-full pl-10 pr-4 py-2.5 bg-white border border-stone-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 shadow-sm transition">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PRODUCTS GRID SECTION -->
+        <section id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamic product cards will be injected here -->
+        </section>
+
+        <!-- EMPTY STATE -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-stone-300 mt-6">
+            <div class="w-16 h-16 bg-stone-100 text-stone-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-pizza-slice"></i>
+            </div>
+            <h3 class="text-lg font-bold text-stone-800">No encontramos productos</h3>
+            <p class="text-sm text-stone-500 max-w-sm mx-auto mt-1">Intenta buscar con otros términos o seleccioná otra categoría del menú.</p>
+            <button onclick="resetFilters()" class="mt-4 bg-stone-800 text-white font-semibold text-xs py-2 px-4 rounded-xl hover:bg-stone-900 transition">
+                Ver todos los productos
+            </button>
+        </div>
+
+    </main>
+
+    <!-- MODAL DE DETALLE DE PRODUCTO (SIN TAMAÑOS) -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden bg-stone-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header Image -->
+            <div class="relative h-56 sm:h-64 overflow-hidden bg-stone-100">
+                <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+                <button onclick="closeProductModal()" class="absolute top-4 right-4 w-9 h-9 bg-stone-900/60 hover:bg-stone-900 text-white rounded-full flex items-center justify-center backdrop-blur-md transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <span id="modalBadge" class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow"></span>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto flex-1 space-y-4">
+                <div>
+                    <h3 id="modalTitle" class="text-2xl font-extrabold text-stone-900 mb-1"></h3>
+                    <p id="modalDescription" class="text-stone-600 text-sm leading-relaxed"></p>
+                </div>
+
+                <!-- Custom Note Field -->
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Aclaraciones especiales:</label>
+                    <input type="text" id="modalCustomNote" placeholder="Ej: Sin orégano, bien cocida, sin ajo..." class="w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-between gap-4">
+                <div>
+                    <span class="block text-xs text-stone-500 font-medium">Precio</span>
+                    <span id="modalTotalPrice" class="text-2xl font-black text-red-600">$0</span>
+                </div>
+                <button id="modalAddBtn" onclick="addModalItemToCart()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <span>Agregar al Pedido</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CART DRAWER / MODAL LATERAL -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-stone-950/60 backdrop-blur-sm transition-opacity"></div>
+        
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                
+                <!-- Drawer Header -->
+                <div class="p-5 bg-stone-900 text-white flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-basket-shopping text-red-500 text-xl"></i>
+                        <h2 class="text-xl font-bold">Tu Pedido</h2>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Items List Container -->
+                <div class="flex-1 overflow-y-auto p-5 space-y-4" id="cartItemsContainer">
+                    <!-- Items injected dynamically -->
+                </div>
+
+                <!-- Drawer Checkout Form Footer -->
+                <div class="p-5 bg-stone-50 border-t border-stone-200 space-y-4">
+                    
+                    <!-- Delivery Option Selector -->
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">Forma de Entrega</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="deliveryType" value="delivery" checked onchange="updateDeliveryOption()" class="peer sr-only">
+                                <div class="p-2.5 rounded-xl border-2 border-stone-200 peer-checked:border-red-600 peer-checked:bg-red-50 text-center transition">
+                                    <i class="fa-solid fa-motorcycle block text-lg mb-1 text-stone-600 peer-checked:text-red-600"></i>
+                                    <span class="text-xs font-bold block text-stone-800">Delivery</span>
+                                    <span class="text-[10px] text-stone-500">+$500 envío</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="deliveryType" value="takeaway" onchange="updateDeliveryOption()" class="peer sr-only">
+                                <div class="p-2.5 rounded-xl border-2 border-stone-200 peer-checked:border-red-600 peer-checked:bg-red-50 text-center transition">
+                                    <i class="fa-solid fa-store block text-lg mb-1 text-stone-600 peer-checked:text-red-600"></i>
+                                    <span class="text-xs font-bold block text-stone-800">Retiro Local</span>
+                                    <span class="text-[10px] text-emerald-600 font-bold">Sin costo</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Customer Details Form -->
+                    <div class="space-y-3">
+                        <div>
+                            <input type="text" id="customerName" placeholder="Tu Nombre completo *" class="w-full bg-white border border-stone-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        </div>
+                        
+                        <!-- Address + GPS Button Group -->
+                        <div id="addressFieldGroup" class="space-y-1.5">
+                            <div class="flex gap-2">
+                                <input type="text" id="customerAddress" placeholder="Dirección de Envío (Calle, Nº, Barrio) *" class="flex-1 bg-white border border-stone-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-red-500 focus:outline-none">
+                                <button type="button" onclick="getCurrentLocation()" class="bg-amber-500 hover:bg-amber-600 text-stone-900 text-xs font-bold px-3 py-2 rounded-xl transition flex items-center space-x-1 whitespace-nowrap shadow-sm">
+                                    <i class="fa-solid fa-location-crosshairs text-sm"></i>
+                                    <span>Mi GPS</span>
+                                </button>
+                            </div>
+                            <span id="locationStatus" class="text-[10px] text-stone-500 block"></span>
+                        </div>
+
+                        <div>
+                            <select id="paymentMethod" onchange="handlePaymentMethodChange()" class="w-full bg-white border border-stone-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-red-500 focus:outline-none text-stone-700 font-medium">
+                                <option value="Efectivo">💵 Efectivo al entregar</option>
+                                <option value="Transferencia">📱 Transferencia / MercadoPago</option>
+                            </select>
+                        </div>
+
+                        <div id="cashChangeGroup" class="hidden">
+                            <input type="number" id="cashAmount" placeholder="¿Con cuánto abonás? (para el cambio)" class="w-full bg-emerald-50 border border-emerald-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <textarea id="orderNotes" rows="2" placeholder="Notas adicionales para la cocina o delivery..." class="w-full bg-white border border-stone-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-red-500 focus:outline-none resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Breakdown -->
+                    <div class="bg-white p-3 rounded-xl border border-stone-200 space-y-1.5 text-xs">
+                        <div class="flex justify-between text-stone-600">
+                            <span>Subtotal Productos</span>
+                            <span id="summarySubtotal" class="font-semibold">$0</span>
+                        </div>
+                        <div class="flex justify-between text-stone-600">
+                            <span>Costo de Envío</span>
+                            <span id="summaryDelivery" class="font-semibold">$500</span>
+                        </div>
+                        <div class="flex justify-between text-stone-900 font-extrabold text-sm pt-2 border-t border-stone-100">
+                            <span>Total a Pagar</span>
+                            <span id="summaryTotal" class="text-red-600 text-base">$0</span>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Submit Button -->
+                    <button onclick="sendOrderViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95 text-sm">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Confirmar y Enviar Pedido</span>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION SYSTEM -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-stone-900 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 border border-stone-700">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                <i class="fa-solid fa-check text-sm"></i>
+            </div>
+            <span id="toastMsg" class="text-xs font-semibold">Producto agregado al carrito</span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-stone-200 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+            <div class="flex justify-center space-x-4">
+                <a href="https://www.instagram.com/pizzeria_don_cangrejo_?psln=MTdkMG5tN3lnOW13NQ==" target="_blank" class="text-stone-500 hover:text-pink-600 text-lg transition">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/5493625453758" target="_blank" class="text-stone-500 hover:text-emerald-600 text-lg transition">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+            <p class="text-xs text-stone-500">
+                © 2026 <strong>La Pizza de Don Cangrejo</strong> • Pedidos directos vía WhatsApp.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const WHATSAPP_NUMBER = "5493625453758";
+        let userGpsLink = "";
+
+        const CATEGORIES = [
+            { id: 'todas', label: ' Todos los Productos' },
+            { id: 'pizzas', label: '🍕 Pizzas' },
+            { id: 'empanadas', label: '🥟 Empanadas' },
+            { id: 'papas', label: '🍟 Papas Fritas' },
+        ];
+
+        // LISTA ÚNICA Y EXCLUSIVA DE PRODUCTOS (PRECIOS Y RUTAS EXACTAS .jpeg)
+        const PRODUCTS = [
+            // PIZZAS
+            {
+                id: 'p1',
+                name: 'Calabresa',
+                category: 'pizzas',
+                badge: 'Tradicional',
+                description: 'Salsa, queso muzzarella, aceitunas y orégano.',
+                image: 'Img/pizzas/Calabresa.jpeg',
+                price: 18000
+            },
+            {
+                id: 'p2',
+                name: 'Napolitana',
+                category: 'pizzas',
+                badge: 'Tradicional',
+                description: 'Salsa, queso muzzarella, tomate, aceitunas, orégano y ajo.',
+                image: 'Img/pizzas/Napolitana.jpeg',
+                price: 16000
+            },
+            {
+                id: 'p3',
+                name: 'Jamón y Morrones',
+                category: 'pizzas',
+                badge: 'Clásica',
+                description: 'Salsa, queso muzzarella, jamón, morrón rojo, orégano y aceitunas.',
+                image: 'Img/pizzas/Jamon y Morrones.jpeg',
+                price: 18000
+            },
+            {
+                id: 'p4',
+                name: 'Champiñones',
+                category: 'pizzas',
+                badge: 'Especial',
+                description: 'Salsa, queso Muzzarella, champiñones, aceitunas y orégano.',
+                image: 'Img/pizzas/Champiñones.jpeg',
+                price: 18000
+            },
+
+            // EMPANADAS
+            {
+                id: 'e1',
+                name: 'Cortada a Cuchillo',
+                category: 'empanadas',
+                badge: 'Masa Madre',
+                description: 'Con masa madre, carne cuadril de ternera.',
+                image: 'Img/empanadas/Cortada a Cuchillo.jpeg',
+                price: 20000
+            },
+
+            // PAPAS FRITAS
+            {
+                id: 'pa1',
+                name: 'Gratinadas',
+                category: 'papas',
+                badge: 'Con Muzzarella',
+                description: 'Queso muzzarella gratinado.',
+                image: 'Img/papas/Gratinadas.jpeg',
+                price: 11000
+            },
+            {
+                id: 'pa2',
+                name: 'Cheddar y Verdeo',
+                category: 'papas',
+                badge: 'Popular',
+                description: 'Queso cheddar y cebollita de verdeo fresca.',
+                image: 'Img/papas/Cheddar y Verdeo.jpeg',
+                price: 11000
+            }
+        ];
+
+        let activeCategory = 'todas';
+        let searchQuery = '';
+        let cart = [];
+        let activeModalProduct = null;
+        const DELIVERY_FEE = 500;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+        });
+
+        // GPS GEOLOCALIZACIÓN
+        function getCurrentLocation() {
+            const statusEl = document.getElementById('locationStatus');
+            if (!navigator.geolocation) {
+                alert("La geolocalización no está soportada por este navegador.");
+                return;
+            }
+
+            statusEl.textContent = "Obteniendo ubicación GPS...";
+            statusEl.className = "text-[10px] text-amber-600 font-bold block";
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    userGpsLink = `https://maps.google.com/?q=${lat},${lng}`;
+                    
+                    statusEl.textContent = "✓ Ubicación GPS capturada exitosamente";
+                    statusEl.className = "text-[10px] text-emerald-600 font-bold block";
+                    showToast("Ubicación GPS registrada");
+                },
+                (error) => {
+                    console.error("Error obteniendo ubicación:", error);
+                    statusEl.textContent = "❌ No se pudo obtener la ubicación. Revisa que el GPS esté activo en tu celular.";
+                    statusEl.className = "text-[10px] text-red-500 font-semibold block";
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoryContainer');
+            container.innerHTML = CATEGORIES.map(cat => `
+                <button onclick="setCategory('${cat.id}')"
+                    class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                        activeCategory === cat.id
+                        ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
+                        : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                    }">
+                    ${cat.label}
+                </button>
+            `).join('');
+        }
+
+        function setCategory(catId) {
+            activeCategory = catId;
+            renderCategories();
+            renderProducts();
+        }
+
+        function filterProducts() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderProducts();
+        }
+
+        function resetFilters() {
+            activeCategory = 'todas';
+            searchQuery = '';
+            document.getElementById('searchInput').value = '';
+            renderCategories();
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filtered = PRODUCTS.filter(p => {
+                const matchesCategory = activeCategory === 'todas' || p.category === activeCategory;
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery) || p.description.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(product => {
+                return `
+                <div class="bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-stone-100">
+                            <img src="${product.image}" alt="${product.name}"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop'">
+                            ${product.badge ? `
+                                <span class="absolute top-3 left-3 bg-red-600/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full tracking-wider shadow">
+                                    ${product.badge}
+                                </span>
+                            ` : ''}
+                        </div>
+
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="text-lg font-extrabold text-stone-900 group-hover:text-red-600 transition-colors">${product.name}</h3>
+                            </div>
+                            <p class="text-xs text-stone-500 leading-relaxed line-clamp-3 mb-4">${product.description}</p>
+                        </div>
+                    </div>
+
+                    <div class="px-5 pb-5 pt-0">
+                        <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-stone-400 block">Precio</span>
+                                <span class="text-lg font-black text-stone-900">$${product.price.toLocaleString('es-AR')}</span>
+                            </div>
+
+                            <button onclick="openProductModal('${product.id}')"
+                                class="bg-stone-900 hover:bg-red-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition shadow-md flex items-center space-x-1.5 active:scale-95">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Ordenar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function openProductModal(productId) {
+            activeModalProduct = PRODUCTS.find(p => p.id === productId);
+            if (!activeModalProduct) return;
+
+            document.getElementById('modalCustomNote').value = '';
+
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = activeModalProduct.image;
+            modalImg.onerror = function() {
+                this.src = 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop';
+            };
+
+            document.getElementById('modalTitle').textContent = activeModalProduct.name;
+            document.getElementById('modalDescription').textContent = activeModalProduct.description;
+            document.getElementById('modalTotalPrice').textContent = `$${activeModalProduct.price.toLocaleString('es-AR')}`;
+            
+            const badgeEl = document.getElementById('modalBadge');
+            if (activeModalProduct.badge) {
+                badgeEl.textContent = activeModalProduct.badge;
+                badgeEl.classList.remove('hidden');
+            } else {
+                badgeEl.classList.add('hidden');
+            }
+
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            activeModalProduct = null;
+        }
+
+        function addModalItemToCart() {
+            if (!activeModalProduct) return;
+            
+            const customNote = document.getElementById('modalCustomNote').value.trim();
+
+            const cartItem = {
+                cartItemId: Date.now() + Math.random(),
+                id: activeModalProduct.id,
+                name: activeModalProduct.name,
+                image: activeModalProduct.image,
+                price: activeModalProduct.price,
+                note: customNote,
+                quantity: 1
+            };
+
+            cart.push(cartItem);
+            updateCartUI();
+            closeProductModal();
+            showToast(`¡${cartItem.name} agregado al carrito!`);
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function updateCartUI() {
+            const cartBadge = document.getElementById('cartBadge');
+            const container = document.getElementById('cartItemsContainer');
+
+            const totalItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+            cartBadge.textContent = totalItemsCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-stone-300 mb-3 block"></i>
+                        <p class="text-stone-500 font-semibold text-sm">Tu carrito está vacío</p>
+                        <p class="text-xs text-stone-400 mt-1">¡Agregá algo rico de Don Cangrejo para comenzar!</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between p-3 bg-stone-50 rounded-2xl border border-stone-200/60">
+                        <img src="${item.image}" alt="" class="w-14 h-14 rounded-xl object-cover" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+                        <div class="flex-1 px-3">
+                            <h4 class="text-xs font-bold text-stone-800 line-clamp-1">${item.name}</h4>
+                            ${item.note ? `<p class="text-[10px] text-amber-700 italic">" ${item.note} "</p>` : ''}
+                            <span class="block text-xs font-black text-red-600 mt-0.5">$${(item.price * item.quantity).toLocaleString('es-AR')}</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5 bg-white border border-stone-200 rounded-xl p-1">
+                            <button onclick="changeQuantity(${item.cartItemId}, -1)" class="w-6 h-6 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center text-xs font-bold transition">-</button>
+                            <span class="text-xs font-extrabold px-1.5">${item.quantity}</span>
+                            <button onclick="changeQuantity(${item.cartItemId}, 1)" class="w-6 h-6 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center text-xs font-bold transition">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            calculateCartTotals();
+        }
+
+        function changeQuantity(cartItemId, delta) {
+            const item = cart.find(i => i.cartItemId === cartItemId);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.cartItemId !== cartItemId);
+            }
+            updateCartUI();
+        }
+
+        function updateDeliveryOption() {
+            const isDelivery = document.querySelector('input[name="deliveryType"]:checked').value === 'delivery';
+            const addressGroup = document.getElementById('addressFieldGroup');
+            
+            if (isDelivery) {
+                addressGroup.classList.remove('hidden');
+            } else {
+                addressGroup.classList.add('hidden');
+            }
+
+            calculateCartTotals();
+        }
+
+        function handlePaymentMethodChange() {
+            const method = document.getElementById('paymentMethod').value;
+            const cashGroup = document.getElementById('cashChangeGroup');
+            
+            if (method === 'Efectivo') {
+                cashGroup.classList.remove('hidden');
+            } else {
+                cashGroup.classList.add('hidden');
+            }
+        }
+
+        function calculateCartTotals() {
+            const subtotal = cart.reduce((acc, i) => acc + (i.price * i.quantity), 0);
+            const deliveryType = document.querySelector('input[name="deliveryType"]:checked')?.value || 'delivery';
+            const deliveryCost = (deliveryType === 'delivery' && cart.length > 0) ? DELIVERY_FEE : 0;
+            const total = subtotal + deliveryCost;
+
+            document.getElementById('summarySubtotal').textContent = `$${subtotal.toLocaleString('es-AR')}`;
+            document.getElementById('summaryDelivery').textContent = deliveryCost > 0 ? `$${deliveryCost.toLocaleString('es-AR')}` : 'Gratis';
+            document.getElementById('summaryTotal').textContent = `$${total.toLocaleString('es-AR')}`;
+        }
+
+        function sendOrderViaWhatsApp() {
+            if (cart.length === 0) {
+                alert('El carrito está vacío. Agrega productos antes de confirmar.');
+                return;
+            }
+
+            const name = document.getElementById('customerName').value.trim();
+            const deliveryType = document.querySelector('input[name="deliveryType"]:checked').value;
+            const address = document.getElementById('customerAddress').value.trim();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const cashAmount = document.getElementById('cashAmount').value.trim();
+            const orderNotes = document.getElementById('orderNotes').value.trim();
+
+            if (!name) {
+                alert('Por favor ingresa tu Nombre Completo.');
+                document.getElementById('customerName').focus();
+                return;
+            }
+
+            if (deliveryType === 'delivery' && !address) {
+                alert('Por favor ingresa la Dirección de Envío.');
+                document.getElementById('customerAddress').focus();
+                return;
+            }
+
+            const subtotal = cart.reduce((acc, i) => acc + (i.price * i.quantity), 0);
+            const deliveryCost = deliveryType === 'delivery' ? DELIVERY_FEE : 0;
+            const total = subtotal + deliveryCost;
+
+            let msg = `🍕 *NUEVO PEDIDO - LA PIZZA DE DON CANGREJO* 🍕\n`;
+            msg += `------------------------------------\n`;
+            msg += `👤 *Cliente:* ${name}\n`;
+            msg += `🛵 *Modalidad:* ${deliveryType === 'delivery' ? 'Delivery a Domicilio' : 'Retiro en el Local'}\n`;
+            
+            if (deliveryType === 'delivery') {
+                msg += `📍 *Dirección:* ${address}\n`;
+                if (userGpsLink) {
+                    msg += `🗺️ *Ubicación GPS:* ${userGpsLink}\n`;
+                }
+            }
+            msg += `💳 *Forma de Pago:* ${paymentMethod}\n`;
+            
+            if (paymentMethod === 'Efectivo' && cashAmount) {
+                const change = parseFloat(cashAmount) - total;
+                msg += `💵 *Abona con:* $${parseFloat(cashAmount).toLocaleString('es-AR')} ${change > 0 ? `(Vuelto: $${change.toLocaleString('es-AR')})` : ''}\n`;
+            }
+
+            msg += `\n📝 *DETALLE DE LA COMANDA:*\n`;
+            cart.forEach((item, index) => {
+                msg += `${index + 1}. *${item.quantity}x ${item.name}*\n`;
+                if(item.note) msg += `   └ Nota: _${item.note}_\n`;
+                msg += `   └ Subtotal: $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
+            });
+
+            msg += `\n------------------------------------\n`;
+            msg += `💰 *Subtotal Productos:* $${subtotal.toLocaleString('es-AR')}\n`;
+            if (deliveryType === 'delivery') {
+                msg += `🛵 *Costo Envío:* $${deliveryCost.toLocaleString('es-AR')}\n`;
+            }
+            msg += `🔥 *TOTAL A PAGAR:* $${total.toLocaleString('es-AR')}\n`;
+
+            if (orderNotes) {
+                msg += `\n✍️ *Aclaraciones Generales:* ${orderNotes}\n`;
+            }
+
+            msg += `------------------------------------\n`;
+            msg += `¡Muchas gracias! Quedo a la espera de la confirmación.`;
+
+            const encodedMsg = encodeURIComponent(msg);
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+
+            window.open(waUrl, '_blank');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
